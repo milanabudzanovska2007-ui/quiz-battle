@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 
 const socket = io("https://quiz-battle-jzvi.onrender.com");
 
+
 function App() {
 
     const [nickname, setNickname] = useState("");
@@ -217,7 +218,7 @@ function App() {
                                 fontSize: "18px"
                             }}
                         >
-                            {player.nickname} — {player.score}
+                            {player.nickname} â€” {player.score}
                         </div>
                     ))}
                 </div>
