@@ -1,6 +1,24 @@
-@@ -19,19 +19,159 @@ const io = new Server(server, {
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const cors = require("cors");
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+    },
+});
+
 const rooms = {};
-   const questions = [
+
+const questions = [
     {
         question: "Who is the main ruler of the Dark Domain?",
         answers: [
@@ -222,7 +240,161 @@ const rooms = {};
     }
 ];
 
-@@ -153,4 +293,4 @@ io.on("connection", (socket) => {
+app.get("/", (req, res) => {
+    res.send("Quiz Battle Server Running");
+});
+
+io.on("connection", (socket) => {
+
+    console.log("User connected:", socket.id);
+
+    socket.on("create-room", (nickname) => {
+
+        const roomCode =
+            Math.random().toString(36).substring(2, 7);
+
+        rooms[roomCode] = {
+            players: [
+                {
+                    id: socket.id,
+                    nickname: nickname,
+                    score: 0
+                }
+            ],
+            currentQuestion: 0,
+            answered: false
+        };
+
+        socket.join(roomCode);
+
+        socket.emit("room-created", roomCode);
+
+        io.to(roomCode).emit(
+            "players-update",
+            rooms[roomCode].players
+        );
+
+        console.log("Room created:", roomCode);
+    });
+
+    socket.on("join-room", (data) => {
+
+        const room = rooms[data.roomCode];
+
+        if (!room) {
+            socket.emit(
+                "error-message",
+                "Room not found"
+            );
+            return;
+        }
+
+        room.players.push({
+            id: socket.id,
+            nickname: data.nickname,
+            score: 0
+        });
+
+        socket.join(data.roomCode);
+
+        io.to(data.roomCode).emit(
+            "players-update",
+            room.players
+        );
+
+        console.log(
+            data.nickname +
+            " joined room " +
+            data.roomCode
+        );
+    });
+
+    socket.on("start-game", (roomCode) => {
+
+        const room = rooms[roomCode];
+
+        if (!room) return;
+
+        room.currentQuestion = 0;
+        room.answered = false;
+
+        io.to(roomCode).emit(
+            "new-question",
+            questions[0]
+        );
+
+        console.log(
+            "Game started in room:",
+            roomCode
+        );
+    });
+
+    socket.on("submit-answer", (data) => {
+
+        const room = rooms[data.roomCode];
+
+        if (!room) return;
+
+        if (room.answered) return;
+
+        room.answered = true;
+
+        const currentQuestion =
+            questions[room.currentQuestion];
+
+        const player =
+            room.players.find(
+                p => p.id === socket.id
+            );
+
+        if (!player) return;
+
+        if (
+            data.answer === currentQuestion.correct
+        ) {
+            player.score += 1;
+        }
+
+        io.to(data.roomCode).emit(
+            "players-update",
+            room.players
+        );
+
+        setTimeout(() => {
+
+            room.currentQuestion++;
+
+            room.answered = false;
+
+            if (
+                room.currentQuestion <
+                questions.length
+            ) {
+
+                io.to(data.roomCode).emit(
+                    "new-question",
+                    questions[room.currentQuestion]
+                );
+
+            } else {
+
+                io.to(data.roomCode).emit(
+                    "game-over",
+                    room.players
+                );
+            }
+
+        }, 1500);
+    });
+
+    socket.on("disconnect", () => {
+        console.log(
+            "User disconnected:",
+            socket.id
+        );
+    });
+
+});
 
 server.listen(5000, () => {
     console.log("Server running on port 5000");
