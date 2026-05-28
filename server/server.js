@@ -17,162 +17,226 @@ const io = new Server(server, {
 });
 
 const rooms = {};
-const questions = [
-    {
-        question: "What was the name of the mysterious website with strange cryptic puzzles?",
-        answers: ["Cicada 3301", "DeepSeek", "NullNet", "DarkRoot"],
-        correct: "Cicada 3301"
-    },
-    {
-        question: "Which browser is most associated with accessing the dark web?",
-        answers: ["Chrome", "Safari", "Tor", "Opera"],
-        correct: "Tor"
-    },
-    {
-        question: "What does VPN stand for?",
-        answers: [
-            "Virtual Private Network",
-            "Verified Protocol Node",
-            "Virtual Public Network",
-            "Visual Proxy Net"
-        ],
-        correct: "Virtual Private Network"
-    },
-    {
-        question: "Which company created the Linux kernel?",
-        answers: ["Microsoft", "Apple", "Linus Torvalds", "IBM"],
-        correct: "Linus Torvalds"
-    },
-    {
-        question: "What is phishing?",
-        answers: [
-            "A fishing simulator",
-            "A hacking technique using fake messages",
-            "A type of encryption",
-            "A browser extension"
-        ],
-        correct: "A hacking technique using fake messages"
-    },
-    {
-        question: "Which famous malware damaged Iran’s nuclear program?",
-        answers: ["WannaCry", "ILOVEYOU", "Stuxnet", "Zeus"],
-        correct: "Stuxnet"
-    },
-    {
-        question: "What is the Deep Web?",
-        answers: [
-            "The entire internet",
-            "Unindexed content not found on search engines",
-            "Only illegal websites",
-            "A gaming network"
-        ],
-        correct: "Unindexed content not found on search engines"
-    },
-    {
-        question: "What does HTTP stand for?",
-        answers: [
-            "HyperText Transfer Protocol",
-            "HighText Transfer Process",
-            "Hyper Transfer Text Program",
-            "Home Tool Transfer Protocol"
-        ],
-        correct: "HyperText Transfer Protocol"
-    },
-    {
-        question: "Which hacker group became famous for Guy Fawkes masks?",
-        answers: ["GhostSec", "Lizard Squad", "Anonymous", "BlackEnergy"],
-        correct: "Anonymous"
-    },
-    {
-        question: "What is a brute-force attack?",
-        answers: [
-            "A DDoS attack",
-            "Guessing passwords repeatedly",
-            "Destroying hardware",
-            "Physical hacking"
-        ],
-        correct: "Guessing passwords repeatedly"
-    },
-    {
-        question: "Which protocol secures websites with encryption?",
-        answers: ["FTP", "HTTP", "HTTPS", "SMTP"],
-        correct: "HTTPS"
-    },
-    {
-        question: "What is malware?",
-        answers: [
-            "Malicious software",
-            "A computer monitor",
-            "A Linux tool",
-            "A network cable"
-        ],
-        correct: "Malicious software"
-    },
-    {
-        question: "What is doxxing?",
-        answers: [
-            "Compressing files",
-            "Publishing private information online",
-            "Deleting servers",
-            "Encrypting passwords"
-        ],
-        correct: "Publishing private information online"
-    },
-    {
-        question: "Which social engineering tactic creates panic or urgency?",
-        answers: ["Phishing", "Baiting", "Scareware", "Fork bombing"],
-        correct: "Scareware"
-    },
-    {
-        question: "What is a CAPTCHA mainly used for?",
-        answers: [
-            "Streaming video",
-            "Stopping bots",
-            "Encrypting data",
-            "Tracking cookies"
-        ],
-        correct: "Stopping bots"
-    },
-    {
-        question: "Which operating system is most used on servers?",
-        answers: ["Linux", "Windows XP", "DOS", "Android"],
-        correct: "Linux"
-    },
-    {
-        question: "What does DDoS mean?",
-        answers: [
-            "Direct Data Operating System",
-            "Distributed Denial of Service",
-            "Dynamic Database Output Service",
-            "Digital Domain Server"
-        ],
-        correct: "Distributed Denial of Service"
-    },
-    {
-        question: "Which file extension is commonly executable on Windows?",
-        answers: [".jpg", ".exe", ".png", ".txt"],
-        correct: ".exe"
-    },
-    {
-        question: "What is ransomware?",
-        answers: [
-            "Software demanding payment to unlock data",
-            "A browser update",
-            "An antivirus",
-            "A cloud service"
-        ],
-        correct: "Software demanding payment to unlock data"
-    },
-    {
-        question: "Which password is strongest?",
-        answers: [
-            "123456",
-            "password",
-            "qwerty",
-            "X9!mQ2#Lp7@"
-        ],
-        correct: "X9!mQ2#Lp7@"
-    }
+const quizQuestions = [
+  {
+    question: "Who is the main ruler of the Dark Domain?",
+    options: [
+      "Ferin",
+      "Lugen XII",
+      "Exmer",
+      "Enceris"
+    ],
+    answer: "Lugen XII"
+  },
+
+  {
+    question: "Why does Ferin attack the Dark Citadel?",
+    options: [
+      "To rescue Alice",
+      "To steal magical artifacts",
+      "To avenge Ezeek and restore its glory",
+      "To become a battle mage"
+    ],
+    answer: "To avenge Ezeek and restore its glory"
+  },
+
+  {
+    question: "Who is Alice?",
+    options: [
+      "A Temple Priest",
+      "Lugen’s daughter",
+      "Ferin’s sister",
+      "A mercenary"
+    ],
+    answer: "Lugen’s daughter"
+  },
+
+  {
+    question: "What kind of person is Lugen?",
+    options: [
+      "Emotional and impulsive",
+      "Cowardly and weak",
+      "Strategic and highly intelligent",
+      "Naive and idealistic"
+    ],
+    answer: "Strategic and highly intelligent"
+  },
+
+  {
+    question: "What does the Priest in the party specialize in?",
+    options: [
+      "Necromancy",
+      "Sword fighting",
+      "Battle magic",
+      "Archery"
+    ],
+    answer: "Battle magic"
+  },
+
+  {
+    question: "What happens when the party first attacks Lugen?",
+    options: [
+      "Lugen escapes",
+      "The Hero defeats him",
+      "Lugen effortlessly stops them",
+      "The castle guards kill the Priest"
+    ],
+    answer: "Lugen effortlessly stops them"
+  },
+
+  {
+    question: "What is the Judgment of All Gods?",
+    options: [
+      "A military council",
+      "A magical ritual of judgment",
+      "A royal execution",
+      "A secret organization"
+    ],
+    answer: "A magical ritual of judgment"
+  },
+
+  {
+    question: "What verdict do the All Gods give?",
+    options: [
+      "Ferin must die",
+      "Alice becomes queen immediately",
+      "Lugen must step down",
+      "The Dark Legions are disbanded"
+    ],
+    answer: "Lugen must step down"
+  },
+
+  {
+    question: "Why does Lugen believe Ezeek became prosperous?",
+    options: [
+      "Because of advanced science",
+      "Because of peaceful trade",
+      "Because of piracy and raids",
+      "Because of magical resources"
+    ],
+    answer: "Because of piracy and raids"
+  },
+
+  {
+    question: "What relation exists between Alice and Ferin?",
+    options: [
+      "They are enemies",
+      "They are secretly engaged",
+      "They are siblings",
+      "They are rivals"
+    ],
+    answer: "They are secretly engaged"
+  },
+
+  {
+    question: "Who is Exmer?",
+    options: [
+      "A battle mage",
+      "A member of the Hero’s party",
+      "Lugen’s servant and spy",
+      "The ruler of Ezeek"
+    ],
+    answer: "Lugen’s servant and spy"
+  },
+
+  {
+    question: "How does Lugen describe the Dark Legions?",
+    options: [
+      "Mindless slaves",
+      "Poorly trained soldiers",
+      "Professional and loyal army",
+      "Mercenaries without honor"
+    ],
+    answer: "Professional and loyal army"
+  },
+
+  {
+    question: "Why did Alice originally leave home?",
+    options: [
+      "She hated Ferin",
+      "She wanted treasure",
+      "She felt emotionally neglected",
+      "She was kidnapped"
+    ],
+    answer: "She felt emotionally neglected"
+  },
+
+  {
+    question: "What is unusual about Ferin’s upbringing?",
+    options: [
+      "He was raised by pirates",
+      "He spent most of his life outside Ezeek",
+      "He lived in the Dark Citadel",
+      "He trained with demons"
+    ],
+    answer: "He spent most of his life outside Ezeek"
+  },
+
+  {
+    question: "What does the mercenary mainly use in combat?",
+    options: [
+      "A spear",
+      "A magic staff",
+      "A crossbow",
+      "Twin swords"
+    ],
+    answer: "A crossbow"
+  },
+
+  {
+    question: "What does Lugen value more than fear?",
+    options: [
+      "Chaos",
+      "Revenge",
+      "Competence",
+      "Tradition"
+    ],
+    answer: "Competence"
+  },
+
+  {
+    question: "Why did the Priest join Ferin’s mission?",
+    options: [
+      "He wanted gold",
+      "He hated Alice",
+      "He was desperate and disillusioned",
+      "He wanted to conquer Ezeek"
+    ],
+    answer: "He was desperate and disillusioned"
+  },
+
+  {
+    question: "What theme is central to the story?",
+    options: [
+      "Pure good versus evil",
+      "Comedy about knights",
+      "Political realism and moral complexity",
+      "Romantic fantasy adventure"
+    ],
+    answer: "Political realism and moral complexity"
+  },
+
+  {
+    question: "How does Lugen react to losing power?",
+    options: [
+      "He panics",
+      "He accepts it calmly",
+      "He starts a war immediately",
+      "He escapes the kingdom"
+    ],
+    answer: "He accepts it calmly"
+  },
+
+  {
+    question: "What is the tone of the story?",
+    options: [
+      "Lighthearted comedy",
+      "Dark satire and deconstruction of fantasy tropes",
+      "Children’s fairy tale",
+      "Simple heroic adventure"
+    ],
+    answer: "Dark satire and deconstruction of fantasy tropes"
+  }
 ];
 
 app.get("/", (req, res) => {
