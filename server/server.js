@@ -1,169 +1,224 @@
 @@ -19,19 +19,159 @@ const io = new Server(server, {
 const rooms = {};
-const questions = [
+   const questions = [
     {
-        question: "Capital of France?",
-        answers: ["London", "Paris", "Berlin", "Madrid"],
-        correct: "Paris"
-        question: "What was the name of the mysterious website with strange cryptic puzzles?",
-        answers: ["Cicada 3301", "DeepSeek", "NullNet", "DarkRoot"],
-        correct: "Cicada 3301"
-    },
-    {
-        question: "2 + 2 = ?",
-        answers: ["3", "4", "5", "6"],
-        correct: "4"
-        question: "Which browser is most associated with accessing the dark web?",
-        answers: ["Chrome", "Safari", "Tor", "Opera"],
-        correct: "Tor"
-    },
-    {
-        question: "Color of the sky?",
-        answers: ["Blue", "Green", "Red", "Yellow"],
-        correct: "Blue"
-        question: "What does VPN stand for?",
+        question: "Who is the main ruler of the Dark Domain?",
         answers: [
-            "Virtual Private Network",
-            "Verified Protocol Node",
-            "Virtual Public Network",
-            "Visual Proxy Net"
+            "Ferin",
+            "Lugen XII",
+            "Exmer",
+            "Enceris"
         ],
-        correct: "Virtual Private Network"
+        correct: "Lugen XII"
     },
+
     {
-        question: "Which company created the Linux kernel?",
-        answers: ["Microsoft", "Apple", "Linus Torvalds", "IBM"],
-        correct: "Linus Torvalds"
-    },
-    {
-        question: "What is phishing?",
+        question: "Why does Ferin attack the Dark Citadel?",
         answers: [
-            "A fishing simulator",
-            "A hacking technique using fake messages",
-            "A type of encryption",
-            "A browser extension"
+            "To rescue Alice",
+            "To steal magical artifacts",
+            "To avenge Ezeek and restore its glory",
+            "To become a battle mage"
         ],
-        correct: "A hacking technique using fake messages"
+        correct: "To avenge Ezeek and restore its glory"
     },
+
     {
-        question: "Which famous malware damaged Iran’s nuclear program?",
-        answers: ["WannaCry", "ILOVEYOU", "Stuxnet", "Zeus"],
-        correct: "Stuxnet"
-    },
-    {
-        question: "What is the Deep Web?",
+        question: "Who is Alice?",
         answers: [
-            "The entire internet",
-            "Unindexed content not found on search engines",
-            "Only illegal websites",
-            "A gaming network"
+            "A Temple Priest",
+            "Lugen’s daughter",
+            "Ferin’s sister",
+            "A mercenary"
         ],
-        correct: "Unindexed content not found on search engines"
+        correct: "Lugen’s daughter"
     },
+
     {
-        question: "What does HTTP stand for?",
+        question: "What kind of person is Lugen?",
         answers: [
-            "HyperText Transfer Protocol",
-            "HighText Transfer Process",
-            "Hyper Transfer Text Program",
-            "Home Tool Transfer Protocol"
+            "Emotional and impulsive",
+            "Cowardly and weak",
+            "Strategic and highly intelligent",
+            "Naive and idealistic"
         ],
-        correct: "HyperText Transfer Protocol"
+        correct: "Strategic and highly intelligent"
     },
+
     {
-        question: "Which hacker group became famous for Guy Fawkes masks?",
-        answers: ["GhostSec", "Lizard Squad", "Anonymous", "BlackEnergy"],
-        correct: "Anonymous"
-    },
-    {
-        question: "What is a brute-force attack?",
+        question: "What does the Priest in the party specialize in?",
         answers: [
-            "A DDoS attack",
-            "Guessing passwords repeatedly",
-            "Destroying hardware",
-            "Physical hacking"
+            "Necromancy",
+            "Sword fighting",
+            "Battle magic",
+            "Archery"
         ],
-        correct: "Guessing passwords repeatedly"
+        correct: "Battle magic"
     },
+
     {
-        question: "Which protocol secures websites with encryption?",
-        answers: ["FTP", "HTTP", "HTTPS", "SMTP"],
-        correct: "HTTPS"
-    },
-    {
-        question: "What is malware?",
+        question: "What happens when the party first attacks Lugen?",
         answers: [
-            "Malicious software",
-            "A computer monitor",
-            "A Linux tool",
-            "A network cable"
+            "Lugen escapes",
+            "The Hero defeats him",
+            "Lugen effortlessly stops them",
+            "The castle guards kill the Priest"
         ],
-        correct: "Malicious software"
+        correct: "Lugen effortlessly stops them"
     },
+
     {
-        question: "What is doxxing?",
+        question: "What is the Judgment of All Gods?",
         answers: [
-            "Compressing files",
-            "Publishing private information online",
-            "Deleting servers",
-            "Encrypting passwords"
+            "A military council",
+            "A magical ritual of judgment",
+            "A royal execution",
+            "A secret organization"
         ],
-        correct: "Publishing private information online"
+        correct: "A magical ritual of judgment"
     },
+
     {
-        question: "Which social engineering tactic creates panic or urgency?",
-        answers: ["Phishing", "Baiting", "Scareware", "Fork bombing"],
-        correct: "Scareware"
-    },
-    {
-        question: "What is a CAPTCHA mainly used for?",
+        question: "What verdict do the All Gods give?",
         answers: [
-            "Streaming video",
-            "Stopping bots",
-            "Encrypting data",
-            "Tracking cookies"
+            "Ferin must die",
+            "Alice becomes queen immediately",
+            "Lugen must step down",
+            "The Dark Legions are disbanded"
         ],
-        correct: "Stopping bots"
+        correct: "Lugen must step down"
     },
+
     {
-        question: "Which operating system is most used on servers?",
-        answers: ["Linux", "Windows XP", "DOS", "Android"],
-        correct: "Linux"
-    },
-    {
-        question: "What does DDoS mean?",
+        question: "Why does Lugen believe Ezeek became prosperous?",
         answers: [
-            "Direct Data Operating System",
-            "Distributed Denial of Service",
-            "Dynamic Database Output Service",
-            "Digital Domain Server"
+            "Because of advanced science",
+            "Because of peaceful trade",
+            "Because of piracy and raids",
+            "Because of magical resources"
         ],
-        correct: "Distributed Denial of Service"
+        correct: "Because of piracy and raids"
     },
+
     {
-        question: "Which file extension is commonly executable on Windows?",
-        answers: [".jpg", ".exe", ".png", ".txt"],
-        correct: ".exe"
-    },
-    {
-        question: "What is ransomware?",
+        question: "What relation exists between Alice and Ferin?",
         answers: [
-            "Software demanding payment to unlock data",
-            "A browser update",
-            "An antivirus",
-            "A cloud service"
+            "They are enemies",
+            "They are secretly engaged",
+            "They are siblings",
+            "They are rivals"
         ],
-        correct: "Software demanding payment to unlock data"
+        correct: "They are secretly engaged"
     },
+
     {
-        question: "Which password is strongest?",
+        question: "Who is Exmer?",
         answers: [
-            "123456",
-            "password",
-            "qwerty",
-            "X9!mQ2#Lp7@"
+            "A battle mage",
+            "A member of the Hero’s party",
+            "Lugen’s servant and spy",
+            "The ruler of Ezeek"
         ],
-        correct: "X9!mQ2#Lp7@"
+        correct: "Lugen’s servant and spy"
+    },
+
+    {
+        question: "How does Lugen describe the Dark Legions?",
+        answers: [
+            "Mindless slaves",
+            "Poorly trained soldiers",
+            "Professional and loyal army",
+            "Mercenaries without honor"
+        ],
+        correct: "Professional and loyal army"
+    },
+
+    {
+        question: "Why did Alice originally leave home?",
+        answers: [
+            "She hated Ferin",
+            "She wanted treasure",
+            "She felt emotionally neglected",
+            "She was kidnapped"
+        ],
+        correct: "She felt emotionally neglected"
+    },
+
+    {
+        question: "What is unusual about Ferin’s upbringing?",
+        answers: [
+            "He was raised by pirates",
+            "He spent most of his life outside Ezeek",
+            "He lived in the Dark Citadel",
+            "He trained with demons"
+        ],
+        correct: "He spent most of his life outside Ezeek"
+    },
+
+    {
+        question: "What does the mercenary mainly use in combat?",
+        answers: [
+            "A spear",
+            "A magic staff",
+            "A crossbow",
+            "Twin swords"
+        ],
+        correct: "A crossbow"
+    },
+
+    {
+        question: "What does Lugen value more than fear?",
+        answers: [
+            "Chaos",
+            "Revenge",
+            "Competence",
+            "Tradition"
+        ],
+        correct: "Competence"
+    },
+
+    {
+        question: "Why did the Priest join Ferin’s mission?",
+        answers: [
+            "He wanted gold",
+            "He hated Alice",
+            "He was desperate and disillusioned",
+            "He wanted to conquer Ezeek"
+        ],
+        correct: "He was desperate and disillusioned"
+    },
+
+    {
+        question: "What theme is central to the story?",
+        answers: [
+            "Pure good versus evil",
+            "Comedy about knights",
+            "Political realism and moral complexity",
+            "Romantic fantasy adventure"
+        ],
+        correct: "Political realism and moral complexity"
+    },
+
+    {
+        question: "How does Lugen react to losing power?",
+        answers: [
+            "He panics",
+            "He accepts it calmly",
+            "He starts a war immediately",
+            "He escapes the kingdom"
+        ],
+        correct: "He accepts it calmly"
+    },
+
+    {
+        question: "What is the tone of the story?",
+        answers: [
+            "Lighthearted comedy",
+            "Dark satire and deconstruction of fantasy tropes",
+            "Children’s fairy tale",
+            "Simple heroic adventure"
+        ],
+        correct: "Dark satire and deconstruction of fantasy tropes"
     }
 ];
 
